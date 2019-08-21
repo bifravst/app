@@ -27,7 +27,7 @@
   "license": "MIT",
   "dependencies": {
     "@amcharts/amcharts4": "^4.5.14",
-    "@bifravst/athena-helpers": "^3.0.0",
+    "@bifravst/athena-helpers": "^4.0.0",
     "@bifravst/twemoji": "^12.1.2-typescript",
     "aws-amplify": "^1.1.36",
     "aws-amplify-react": "^2.3.12",
