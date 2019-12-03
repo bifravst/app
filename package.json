@@ -33,7 +33,7 @@
     "@bifravst/athena-helpers": "^6.0.0",
     "@bifravst/cell-geolocation-helpers": "^1.0.0",
     "@react-firebase/auth": "^0.2.10",
-    "aws-amplify": "^1.2.4",
+    "aws-amplify": "^2.2.0",
     "aws-amplify-react": "^2.5.4",
     "aws-iot-device-sdk": "^2.2.1",
     "aws-sdk": "^2.582.0",
