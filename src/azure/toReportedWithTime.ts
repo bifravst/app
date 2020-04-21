@@ -1,5 +1,11 @@
 import { DeviceTwinState } from '../@types/azure-device'
-import { ReportedConfigState, ReportedGps } from '../@types/device-state'
+import {
+	ReportedConfigState,
+	ReportedGps,
+	ReportedBattery,
+	ReportedRoamingInformation,
+	ReportedDeviceInformation,
+} from '../@types/device-state'
 
 export const toReportedWithTime = (state: DeviceTwinState) => {
 	const { $metadata } = state
@@ -27,6 +33,44 @@ export const toReportedWithTime = (state: DeviceTwinState) => {
 				},
 			}),
 			{} as Partial<ReportedGps>,
+		),
+		bat: Object.entries(state.bat).reduce(
+			(bat, [k, v]) => ({
+				...bat,
+				[k as keyof ReportedBattery]: {
+					value: v,
+					receivedAt: new Date(
+						$metadata?.bat?.[k as keyof ReportedBattery].$lastUpdated,
+					),
+				},
+			}),
+			{} as ReportedBattery,
+		),
+		roam: Object.entries(state.roam).reduce(
+			(roam, [k, v]) => ({
+				...roam,
+				[k as keyof ReportedRoamingInformation]: {
+					value: v,
+					receivedAt: new Date(
+						$metadata?.roam?.[
+							k as keyof ReportedRoamingInformation
+						].$lastUpdated,
+					),
+				},
+			}),
+			{} as ReportedRoamingInformation,
+		),
+		dev: Object.entries(state.dev).reduce(
+			(dev, [k, v]) => ({
+				...dev,
+				[k as keyof ReportedDeviceInformation]: {
+					value: v,
+					receivedAt: new Date(
+						$metadata?.dev?.[k as keyof ReportedDeviceInformation].$lastUpdated,
+					),
+				},
+			}),
+			{} as ReportedDeviceInformation,
 		),
 	}
 }
