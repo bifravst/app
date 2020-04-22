@@ -1,6 +1,6 @@
 import { ICredentials } from '@aws-amplify/core'
 import { device } from 'aws-iot-device-sdk'
-import { mergeReportedAndMetadata } from './mergeReportedAndMetadata'
+import { toReportedWithReceivedAt } from './toReportedWithReceivedAt'
 import { parseMessage } from '../util/parseMessage'
 import { Message } from '../@types/Message'
 import { ThingState } from '../@types/aws-device'
@@ -27,7 +27,7 @@ export const connectAndListenForStateChange = async ({
 	region: string
 	mqttEndpoint: string
 }): Promise<device> =>
-	new Promise(resolve => {
+	new Promise((resolve) => {
 		const connectArgs = {
 			clientId,
 			region,
@@ -43,10 +43,10 @@ export const connectAndListenForStateChange = async ({
 		connection.on('connect', async () => {
 			console.log('[Iot]', `connected ${clientId}`)
 			await Promise.all([
-				new Promise(resolve =>
+				new Promise((resolve) =>
 					connection.subscribe(t.stateUpdates, undefined, resolve),
 				),
-				new Promise(resolve =>
+				new Promise((resolve) =>
 					connection.subscribe(t.messages, undefined, resolve),
 				),
 			])
@@ -56,7 +56,7 @@ export const connectAndListenForStateChange = async ({
 			if (topic === t.stateUpdates) {
 				const shadow = JSON.parse(payload.toString()).current
 				const newState = {
-					reported: mergeReportedAndMetadata({
+					reported: toReportedWithReceivedAt({
 						reported: shadow.state.reported,
 						metadata: shadow.metadata.reported,
 					}),

@@ -20,6 +20,11 @@ export type Gps = {
 	ts: number
 }
 
+export type Accelerometer = {
+	v: [number, number, number]
+	ts: number
+}
+
 export type Battery = {
 	v: number
 	ts: number
@@ -48,43 +53,58 @@ export type RoamingInformation = {
 	ts: number
 }
 
-export type ReceivedPropery<A> = {
+export type ReceivedProperty<A> = {
 	value: A
 	receivedAt: Date
 }
 
 export type MakeReceivedProperty<Type> = {
-	readonly [Key in keyof Type]: ReceivedPropery<Type[Key]>
+	readonly [Key in keyof Type]: ReceivedProperty<Type[Key]>
 }
 
 export type ReportedConfigState = MakeReceivedProperty<DeviceConfig>
 export type ReportedGps = MakeReceivedProperty<Gps>
 export type ReportedBattery = MakeReceivedProperty<Battery>
-export type ReportedBattery = MakeReceivedProperty<Battery>
+export type ReportedAccelerometer = {
+	ts: ReceivedProperty<number>
+	v: {
+		value: [ReceivedProperty<number>]
+		receivedAt: Date
+	}
+}
 export type ReportedDeviceInformation = {
-	ts: ReceivedPropery<number>
+	ts: ReceivedProperty<number>
 	v: {
 		value: {
-			band: ReceivedPropery<number>
-			nw: ReceivedPropery<string>
-			iccid: ReceivedPropery<string>
-			modV: ReceivedPropery<string>
-			brdV: ReceivedPropery<string>
-			appV: ReceivedPropery<string>
+			band: ReceivedProperty<number>
+			nw: ReceivedProperty<string>
+			iccid: ReceivedProperty<string>
+			modV: ReceivedProperty<string>
+			brdV: ReceivedProperty<string>
+			appV: ReceivedProperty<string>
 		}
 		receivedAt: Date
 	}
 }
 export type ReportedRoamingInformation = {
-	ts: ReceivedPropery<number>
+	ts: ReceivedProperty<number>
 	v: {
 		value: {
-			area: ReceivedPropery<number>
-			mccmnc: ReceivedPropery<number>
-			cell: ReceivedPropery<number>
-			ip: ReceivedPropery<string>
-			rsrp: ReceivedPropery<number>
+			area: ReceivedProperty<number>
+			mccmnc: ReceivedProperty<number>
+			cell: ReceivedProperty<number>
+			ip: ReceivedProperty<string>
+			rsrp: ReceivedProperty<number>
 		}
 		receivedAt: Date
 	}
+}
+
+export type ReportedState = {
+	cfg?: Partial<ReportedConfigState>
+	gps?: ReportedGps
+	bat?: ReportedBattery
+	dev?: ReportedDeviceInformation
+	roam?: ReportedRoamingInformation
+	acc?: ReportedAccelerometer
 }

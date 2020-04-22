@@ -1,8 +1,8 @@
-import { toReportedWithTime } from './toReportedWithTime'
+import { toReportedWithReceivedAt } from './toReportedWithReceivedAt'
 
-describe('toReportedWithTime', () => {
-	it('should convert a digital twin', () => {
-		const r = toReportedWithTime({
+describe('toReportedWithReceivedAt', () => {
+	it('should convert a digital twin shadow document to the format used in the generic app components', () => {
+		const r = toReportedWithReceivedAt({
 			cfg: {
 				act: false,
 				actwt: 103,
@@ -116,15 +116,43 @@ describe('toReportedWithTime', () => {
 		expect(r.cfg).toEqual({
 			act: {
 				value: false,
+				receivedAt: new Date('2020-04-21T14:41:51.627Z'),
 			},
 			actwt: {
 				value: 103,
+				receivedAt: new Date('2020-04-21T14:41:51.627Z'),
 			},
-			mvres: { value: 300 },
-			mvt: { value: 3600 },
-			gpst: { value: 60 },
-			celt: { value: 600 },
-			acct: { value: 1 },
+			mvres: { value: 300, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+			mvt: { value: 3600, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+			gpst: { value: 60, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+			celt: { value: 600, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+			acct: { value: 1, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+		})
+		expect(r.dev).toEqual({
+			v: {
+				band: { value: 666, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+				nw: { value: 'LAN', receivedAt: new Date('2020-04-21T14:41:51.627Z') },
+				modV: {
+					value: 'device-simulator',
+					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
+				},
+				brdV: {
+					value: 'device-simulator',
+					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
+				},
+				appV: {
+					value: '0.0.0-development',
+					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
+				},
+				iccid: {
+					value: '12345678901234567890',
+					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
+				},
+			},
+			ts: {
+				value: 1587480111020,
+				receivedAt: new Date('2020-04-21T14:41:51.627Z'),
+			},
 		})
 	})
 })

@@ -1,9 +1,9 @@
-import { mergeReportedAndMetadata } from './mergeReportedAndMetadata'
+import { toReportedWithReceivedAt } from './toReportedWithReceivedAt'
 
-describe('mergeReportedAndMetadata', () => {
-	it('should merge reported with metadata from an AWS IoT Thing shadow document', () => {
+describe('toReportedWithReceivedAt', () => {
+	it('should merge reported with metadata from an AWS IoT Thing shadow document to produce the format used in the generic app components', () => {
 		expect(
-			mergeReportedAndMetadata({
+			toReportedWithReceivedAt({
 				reported: {
 					gps: {
 						v: {
@@ -25,42 +25,44 @@ describe('mergeReportedAndMetadata', () => {
 					},
 				},
 				metadata: {
-					gps: {
-						v: {
-							lng: {
-								timestamp: 1564568351,
+					reported: {
+						gps: {
+							v: {
+								lng: {
+									timestamp: 1564568351,
+								},
+								lat: {
+									timestamp: 1564568351,
+								},
+								acc: {
+									timestamp: 1564568351,
+								},
+								alt: {
+									timestamp: 1564568351,
+								},
+								spd: {
+									timestamp: 1564568351,
+								},
+								hdg: {
+									timestamp: 1564568351,
+								},
 							},
-							lat: {
-								timestamp: 1564568351,
-							},
-							acc: {
-								timestamp: 1564568351,
-							},
-							alt: {
-								timestamp: 1564568351,
-							},
-							spd: {
-								timestamp: 1564568351,
-							},
-							hdg: {
+							ts: {
 								timestamp: 1564568351,
 							},
 						},
-						ts: {
-							timestamp: 1564568351,
+						acc: {
+							v: [
+								{ timestamp: 1564571596 },
+								{ timestamp: 1564571596 },
+								{ timestamp: 1564571596 },
+							],
+							ts: { timestamp: 1564571596 },
 						},
-					},
-					acc: {
-						v: [
-							{ timestamp: 1564571596 },
-							{ timestamp: 1564571596 },
-							{ timestamp: 1564571596 },
-						],
-						ts: { timestamp: 1564571596 },
-					},
-					cfg: {
-						act: {
-							timestamp: 1564568288,
+						cfg: {
+							act: {
+								timestamp: 1564568288,
+							},
 						},
 					},
 				},

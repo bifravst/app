@@ -19,7 +19,7 @@ import { DeviceTwin } from '../../@types/azure-device'
 import { Map, CatMapContainer, Location, CellLocation } from '../../Map/Map'
 import { Toggle } from '../../Toggle/Toggle'
 import { ReportedTime } from '../../ReportedTime/ReportedTime'
-import { toReportedWithTime } from '../toReportedWithTime'
+import { toReportedWithReceivedAt } from '../toReportedWithReceivedAt'
 import { ConnectionInformation } from '../../ConnectionInformation/ConnectionInformation'
 import { DeviceInfo } from '../../DeviceInformation/DeviceInformation'
 
@@ -34,7 +34,7 @@ export const Cat = ({
 	cat: Device & LoadedCat
 	update: (cat: Device & LoadedCat) => void
 }) => {
-	const reportedWithTime = toReportedWithTime(cat.state.reported)
+	const reportedWithTime = toReportedWithReceivedAt(cat.state.reported)
 
 	const [deleted, setDeleted] = useState(false)
 	const [deleting, setDeleting] = useState(false)
