@@ -25,7 +25,7 @@ export type ThingState = {
 }
 
 export type ThingStateMetadataProperty = {
-	timestamp: number
+	timestamp?: number
 } & {
 	[key: string]: ThingStateMetadataProperty
 }

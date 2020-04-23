@@ -68,7 +68,6 @@ export const Cat = ({
 	const [state, setState] = useState<ThingState>()
 	const [error, setError] = useState<Error>()
 	const reported = state && state.reported
-	const desired = state && state.desired
 
 	useEffect(() => {
 		let didCancel = false
@@ -152,11 +151,11 @@ export const Cat = ({
 						{reportedWithReceived?.roam && (
 							<Toggle>
 								<ConnectionInformation
-									mccmnc={reportedWithReceived.roam.v.value.mccmnc.value}
-									rsrp={reportedWithReceived.roam.v.value.rsrp.value}
+									mccmnc={reportedWithReceived.roam.v.value.mccmnc}
+									rsrp={reportedWithReceived.roam.v.value.rsrp}
 									receivedAt={reportedWithReceived.roam.v.receivedAt}
 									reportedAt={new Date(reportedWithReceived.roam.ts.value)}
-									networkOperator={reportedWithReceived.dev?.v.value.nw.value}
+									networkOperator={reportedWithReceived.dev?.v.value.nw}
 								/>
 							</Toggle>
 						)}
@@ -278,7 +277,7 @@ export const Cat = ({
 							<AccelerometerDiagram values={reported.acc.v} />
 							<ReportedTime
 								reportedAt={new Date(reported.acc.ts)}
-								receivedAt={reportedWithReceived.acc.v.value[0].receivedAt}
+								receivedAt={reportedWithReceived.acc.v.receivedAt}
 							/>
 						</Collapsable>
 					</>

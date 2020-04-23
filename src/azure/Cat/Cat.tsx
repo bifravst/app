@@ -167,11 +167,11 @@ export const Cat = ({
 						{reportedWithTime.roam?.v && reportedWithTime.dev?.v && (
 							<Toggle>
 								<ConnectionInformation
-									mccmnc={reportedWithTime.roam.v.value.mccmnc.value}
-									rsrp={reportedWithTime.roam.v.value.rsrp.value}
+									mccmnc={reportedWithTime.roam.v.value.mccmnc}
+									rsrp={reportedWithTime.roam.v.value.rsrp}
 									receivedAt={reportedWithTime.roam.v.receivedAt}
 									reportedAt={new Date(reportedWithTime.roam.ts.value)}
-									networkOperator={reportedWithTime.dev.v.value.nw.value}
+									networkOperator={reportedWithTime.dev.v.value.nw}
 								/>
 							</Toggle>
 						)}

@@ -62,46 +62,17 @@ export type MakeReceivedProperty<Type> = {
 	readonly [Key in keyof Type]: ReceivedProperty<Type[Key]>
 }
 
-export type ReportedConfigState = MakeReceivedProperty<DeviceConfig>
+export type ReportedConfigState = Partial<MakeReceivedProperty<DeviceConfig>>
 export type ReportedGps = MakeReceivedProperty<Gps>
 export type ReportedBattery = MakeReceivedProperty<Battery>
-export type ReportedAccelerometer = {
-	ts: ReceivedProperty<number>
-	v: {
-		value: [ReceivedProperty<number>]
-		receivedAt: Date
-	}
-}
-export type ReportedDeviceInformation = {
-	ts: ReceivedProperty<number>
-	v: {
-		value: {
-			band: ReceivedProperty<number>
-			nw: ReceivedProperty<string>
-			iccid: ReceivedProperty<string>
-			modV: ReceivedProperty<string>
-			brdV: ReceivedProperty<string>
-			appV: ReceivedProperty<string>
-		}
-		receivedAt: Date
-	}
-}
-export type ReportedRoamingInformation = {
-	ts: ReceivedProperty<number>
-	v: {
-		value: {
-			area: ReceivedProperty<number>
-			mccmnc: ReceivedProperty<number>
-			cell: ReceivedProperty<number>
-			ip: ReceivedProperty<string>
-			rsrp: ReceivedProperty<number>
-		}
-		receivedAt: Date
-	}
-}
+export type ReportedAccelerometer = MakeReceivedProperty<Accelerometer>
+export type ReportedDeviceInformation = MakeReceivedProperty<DeviceInformation>
+export type ReportedRoamingInformation = MakeReceivedProperty<
+	RoamingInformation
+>
 
 export type ReportedState = {
-	cfg?: Partial<ReportedConfigState>
+	cfg?: ReportedConfigState
 	gps?: ReportedGps
 	bat?: ReportedBattery
 	dev?: ReportedDeviceInformation

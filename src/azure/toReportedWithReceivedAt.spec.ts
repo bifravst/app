@@ -130,24 +130,15 @@ describe('toReportedWithReceivedAt', () => {
 		})
 		expect(r.dev).toEqual({
 			v: {
-				band: { value: 666, receivedAt: new Date('2020-04-21T14:41:51.627Z') },
-				nw: { value: 'LAN', receivedAt: new Date('2020-04-21T14:41:51.627Z') },
-				modV: {
-					value: 'device-simulator',
-					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
+				value: {
+					band: 666,
+					nw: 'LAN',
+					modV: 'device-simulator',
+					brdV: 'device-simulator',
+					appV: '0.0.0-development',
+					iccid: '12345678901234567890',
 				},
-				brdV: {
-					value: 'device-simulator',
-					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
-				},
-				appV: {
-					value: '0.0.0-development',
-					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
-				},
-				iccid: {
-					value: '12345678901234567890',
-					receivedAt: new Date('2020-04-21T14:41:51.627Z'),
-				},
+				receivedAt: new Date('2020-04-21T14:41:51.627Z'),
 			},
 			ts: {
 				value: 1587480111020,

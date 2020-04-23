@@ -4,11 +4,16 @@ import {
 	Battery,
 	DeviceInformation,
 	RoamingInformation,
+	Accelerometer,
 } from './device-state'
 
 type PropertyMetadata = {
 	$lastUpdated: string
 	$lastUpdatedVersion?: number
+}
+
+export type MakePropertyMetadata<Type> = {
+	readonly [Key in keyof Type]: PropertyMetadata<Type[Key]>
 }
 
 export type DeviceTwinReported = {
@@ -17,52 +22,14 @@ export type DeviceTwinReported = {
 	bat?: Battery
 	dev?: DeviceInformation
 	roam?: RoamingInformation
+	acc?: Accelerometer
 	$metadata: PropertyMetadata & {
-		cfg?: PropertyMetadata & {
-			act: PropertyMetadata
-			actwt: PropertyMetadata
-			mvres: PropertyMetadata
-			mvt: PropertyMetadata
-			gpst: PropertyMetadata
-			celt: PropertyMetadata
-			acct: PropertyMetadata
-		}
-		gps?: PropertyMetadata & {
-			v: PropertyMetadata & {
-				lat: PropertyMetadata
-				lng: PropertyMetadata
-				acc: PropertyMetadata
-				alt: PropertyMetadata
-				spd: PropertyMetadata
-				hdg: PropertyMetadata
-			}
-			ts: PropertyMetadata
-		}
-		bat?: PropertyMetadata & {
-			v: PropertyMetadata
-			ts: PropertyMetadata
-		}
-		dev?: PropertyMetadata & {
-			v: PropertyMetadata & {
-				band: PropertyMetadata
-				nw: PropertyMetadata
-				iccid: PropertyMetadata
-				modV: PropertyMetadata
-				brdV: PropertyMetadata
-				appV: PropertyMetadata
-			}
-			ts: PropertyMetadata
-		}
-		roam?: PropertyMetadata & {
-			v: PropertyMetadata & {
-				area: PropertyMetadata
-				mccmnc: PropertyMetadata
-				cell: PropertyMetadata
-				ip: PropertyMetadata
-				rsrp: PropertyMetadata
-			}
-			ts: PropertyMetadata
-		}
+		cfg?: PropertyMetadata & MakePropertyMetadata<DeviceConfig>
+		gps?: PropertyMetadata & MakePropertyMetadata<Gps>
+		bat?: PropertyMetadata & MakePropertyMetadata<Battery>
+		dev?: PropertyMetadata & MakePropertyMetadata<DeviceInformation>
+		roam?: PropertyMetadata & MakePropertyMetadata<RoamingInformation>
+		acc?: PropertyMetadata & MakePropertyMetadata<Accelerometer>
 	}
 	$version: number
 }
@@ -70,15 +37,7 @@ export type DeviceTwinReported = {
 export type DeviceTwinDesired = {
 	cfg?: Partial<DeviceConfig>
 	$metadata: PropertyMetadata & {
-		cfg?: PropertyMetadata & {
-			act: PropertyMetadata
-			actwt: PropertyMetadata
-			mvres: PropertyMetadata
-			mvt: PropertyMetadata
-			gpst: PropertyMetadata
-			celt: PropertyMetadata
-			acct: PropertyMetadata
-		}
+		cfg?: PropertyMetadata & MakePropertyMetadata<DeviceConfig>
 	}
 	$version: number
 }

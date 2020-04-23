@@ -42,52 +42,50 @@ export const DeviceInfo = ({
 			<DeviceInformationDl>
 				<dt>Board</dt>
 				<dd>
-					<code>{device.v.value.brdV.value}</code>
+					<code>{device.v.value.brdV}</code>
 				</dd>
 				<dt>Modem</dt>
 				<dd>
-					<code>{device.v.value.modV.value}</code>
+					<code>{device.v.value.modV}</code>
 				</dd>
 				<dt>Application</dt>
 				<dd>
-					<code>{device.v.value.appV.value}</code>
+					<code>{device.v.value.appV}</code>
 				</dd>
 			</DeviceInformationDl>
 			<h4>Connection</h4>
 			<DeviceInformationDl>
 				<dt>Band</dt>
 				<dd>
-					<code>{device.v.value.band.value}</code>
+					<code>{device.v.value.band}</code>
 				</dd>
 				<dt>ICCID</dt>
 				<dd>
-					<code>{device.v.value.iccid.value}</code>
+					<code>{device.v.value.iccid}</code>
 				</dd>
 				{roaming && (
 					<>
 						<dt>MCC/MNC</dt>
 						<dd>
-							<code>{roaming.v.value.mccmnc.value}</code>
+							<code>{roaming.v.value.mccmnc}</code>
 						</dd>
 						<dt>Area Code</dt>
 						<dd>
-							<code>{roaming.v.value.area.value}</code>
+							<code>{roaming.v.value.area}</code>
 						</dd>
 						<dt>CellID</dt>
 						<dd>
-							<code>{roaming.v.value.cell.value}</code>
+							<code>{roaming.v.value.cell}</code>
 						</dd>
 						<dt>IP</dt>
 						<dd>
-							<code>{roaming.v.value.ip.value}</code>
+							<code>{roaming.v.value.ip}</code>
 						</dd>
 					</>
 				)}
 			</DeviceInformationDl>
 			<StyledReportedTime
-				receivedAt={
-					roaming?.v.value.rsrp.receivedAt ?? device.v.value.brdV.receivedAt
-				}
+				receivedAt={roaming?.v.receivedAt ?? device.v.receivedAt}
 				reportedAt={new Date(roaming?.ts.value ?? device.ts.value)}
 			/>
 		</div>

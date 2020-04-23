@@ -70,30 +70,15 @@ describe('toReportedWithReceivedAt', () => {
 		).toEqual({
 			gps: {
 				v: {
-					lng: {
-						value: 10.437087,
-						receivedAt: new Date(1564568351 * 1000),
+					value: {
+						lng: 10.437087,
+						lat: 63.42156,
+						acc: 24.798573,
+						alt: 170.528305,
+						spd: 0.579327,
+						hdg: 0,
 					},
-					lat: {
-						value: 63.42156,
-						receivedAt: new Date(1564568351 * 1000),
-					},
-					acc: {
-						value: 24.798573,
-						receivedAt: new Date(1564568351 * 1000),
-					},
-					alt: {
-						value: 170.528305,
-						receivedAt: new Date(1564568351 * 1000),
-					},
-					spd: {
-						value: 0.579327,
-						receivedAt: new Date(1564568351 * 1000),
-					},
-					hdg: {
-						value: 0,
-						receivedAt: new Date(1564568351 * 1000),
-					},
+					receivedAt: new Date(1564568351 * 1000),
 				},
 				ts: {
 					value: new Date('2019-07-31T10:58:01.385Z').getTime(),
@@ -101,20 +86,10 @@ describe('toReportedWithReceivedAt', () => {
 				},
 			},
 			acc: {
-				v: [
-					{
-						value: 4.6000000000000005,
-						receivedAt: new Date(1564571596 * 1000),
-					},
-					{
-						value: 4.699999999999999,
-						receivedAt: new Date(1564571596 * 1000),
-					},
-					{
-						value: 7.199999999999999,
-						receivedAt: new Date(1564571596 * 1000),
-					},
-				],
+				v: {
+					value: [4.6000000000000005, 4.699999999999999, 7.199999999999999],
+					receivedAt: new Date(1564571596 * 1000),
+				},
 				ts: {
 					value: new Date('2019-07-31T11:13:15.075Z').getTime(),
 					receivedAt: new Date(1564571596 * 1000),

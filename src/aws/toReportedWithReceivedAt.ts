@@ -2,18 +2,37 @@ import {
 	ThingStateMetadataProperty,
 	ReportedThingState,
 } from '../@types/aws-device'
-import { ReportedState, ReceivedProperty } from '../@types/device-state'
+import {
+	ReportedState,
+	MakeReceivedProperty,
+	DeviceConfig,
+} from '../@types/device-state'
 
-const toReceivedProp = <A>(
-	v: A | undefined,
-	{ timestamp }: ThingStateMetadataProperty,
-): ReceivedProperty<A> | undefined =>
-	v
-		? {
+/**
+ * AWS meta does not report timestamps for top level arrays or objects, so find the first timestamp in an array or nested object.
+ */
+const findTimestamp = (o: ThingStateMetadataProperty): number | undefined => {
+	if (o.timestamp) return o.timestamp
+	if (Array.isArray(o)) {
+		return o.map(findTimestamp).pop()
+	}
+	return Object.values(o).map(findTimestamp).pop()
+}
+
+const toReceivedProps = <A extends { [key: string]: any }>(
+	v: A,
+	meta: ThingStateMetadataProperty,
+): MakeReceivedProperty<A> =>
+	Object.entries(v).reduce((o, [k, v]) => {
+		const ts = findTimestamp(meta[k])
+		return {
+			...o,
+			[k]: {
 				value: v,
-				receivedAt: new Date(timestamp * 1000),
-		  }
-		: undefined
+				receivedAt: new Date(ts ? ts * 1000 : Date.now()),
+			},
+		}
+	}, {} as MakeReceivedProperty<A>)
 
 /**
  * Converts the AWS IoT Thing reported shadow to the generic format used in the app.
@@ -26,19 +45,30 @@ export const toReportedWithReceivedAt = ({
 	reported: ReportedThingState
 	metadata: ThingStateMetadataProperty
 }): ReportedState => ({
-	cfg: reported.cfg && {
-		act: toReceivedProp<boolean>(reported.cfg.act, metadata.reported.cfg.act),
-		actwt: toReceivedProp<number>(
-			reported.cfg.actwt,
-			metadata.reported.cfg.actwt,
-		),
-		mvres: toReceivedProp<number>(
-			reported.cfg.mvres,
-			metadata.reported.cfg.mvres,
-		),
-		mvt: toReceivedProp<number>(reported.cfg.mvt, metadata.reported.cfg.mvt),
-		gpst: toReceivedProp<number>(reported.cfg.gpst, metadata.reported.cfg.gpst),
-		celt: toReceivedProp<number>(reported.cfg.celt, metadata.reported.cfg.celt),
-		acct: toReceivedProp<number>(reported.cfg.acct, metadata.reported.cfg.acct),
-	},
+	...(reported.cfg &&
+		metadata.reported.cfg && {
+			cfg: toReceivedProps(reported.cfg, metadata.reported.cfg) as Partial<
+				MakeReceivedProperty<DeviceConfig>
+			>,
+		}),
+	...(reported.gps &&
+		metadata.reported.gps && {
+			gps: toReceivedProps(reported.gps, metadata.reported.gps),
+		}),
+	...(reported.bat &&
+		metadata.reported.bat && {
+			bat: toReceivedProps(reported.bat, metadata.reported.bat),
+		}),
+	...(reported.roam &&
+		metadata.reported.roam && {
+			roam: toReceivedProps(reported.roam, metadata.reported.roam),
+		}),
+	...(reported.dev &&
+		metadata.reported.dev && {
+			dev: toReceivedProps(reported.dev, metadata.reported.dev),
+		}),
+	...(reported.acc &&
+		metadata.reported.acc && {
+			acc: toReceivedProps(reported.acc, metadata.reported.acc),
+		}),
 })
