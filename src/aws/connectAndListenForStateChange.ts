@@ -1,6 +1,5 @@
 import { ICredentials } from '@aws-amplify/core'
 import { device } from 'aws-iot-device-sdk'
-import { toReportedWithReceivedAt } from './toReportedWithReceivedAt'
 import { parseMessage } from '../util/parseMessage'
 import { Message } from '../@types/Message'
 import { ThingState } from '../@types/aws-device'
@@ -56,14 +55,12 @@ export const connectAndListenForStateChange = async ({
 			if (topic === t.stateUpdates) {
 				const shadow = JSON.parse(payload.toString()).current
 				const newState = {
-					reported: toReportedWithReceivedAt({
-						reported: shadow.state.reported,
-						metadata: shadow.metadata.reported,
-					}),
+					reported: shadow.state.reported,
 					desired: shadow.state.desired,
-				} as ThingState
-				onNewState(newState)
+					metadata: shadow.metadata,
+				}
 				console.log('Updated state', deviceId, newState)
+				onNewState(newState)
 			} else {
 				try {
 					onMessage && onMessage(parseMessage(JSON.parse(payload.toString())))

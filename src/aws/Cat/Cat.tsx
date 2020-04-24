@@ -87,7 +87,9 @@ export const Cat = ({
 			.catch(setErrorIfNotCanceled)
 
 		listenForStateChange({
-			onNewState: setState,
+			onNewState: (newState) => {
+				setState((state) => ({ ...state, ...newState }))
+			},
 		})
 			.then((s) => {
 				if (didCancel) {
@@ -220,13 +222,17 @@ export const Cat = ({
 									updateDeviceConfig(config)
 										.catch(setError)
 										.then(() => {
-											setState((state) => ({
-												...(state as ThingState),
-												desired: {
-													...(state as ThingState).desired,
-													cfg: config,
-												},
-											}))
+											setState((state) => {
+												if (state) {
+													return {
+														...state,
+														desired: {
+															...state.desired,
+															cfg: config,
+														},
+													}
+												}
+											})
 										})
 										.catch(setError)
 								}}

@@ -14,10 +14,14 @@ export const getThingState = (iotData: IotData) => async (
 		if (!payload) return none
 		const shadow = JSON.parse(payload.toString())
 		if (!shadow.state) return none
-		const { reported, desired } = shadow.state
-		console.log('[reported]', reported)
-		console.log('[desired]', desired)
-		return some(shadow.state as ThingState)
+		const s = {
+			...shadow.state,
+			metadata: shadow.metadata,
+		}
+		console.log({
+			getThingState: s,
+		})
+		return some(s)
 	} catch (err) {
 		console.error(err)
 		return none
