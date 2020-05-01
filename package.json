@@ -6,7 +6,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -59,7 +61,8 @@
     "styled-components": "^5.1.0",
     "twemoji": "^12.1.5",
     "use-debounce": "^3.4.1",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
@@ -153,5 +156,6 @@
     "styledComponents": {
       "pure": true
     }
-  }
+  },
+  "snyk": true
 }
