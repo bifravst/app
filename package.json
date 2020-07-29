@@ -37,7 +37,7 @@
     "aws-amplify": "^3.0.19",
     "aws-amplify-react": "^4.1.18",
     "aws-iot-device-sdk": "^2.2.6",
-    "aws-sdk": "^2.710.0",
+    "aws-sdk": "^2.711.0",
     "azure-iothub": "^1.12.4",
     "date-fns": "^2.14.0",
     "deepmerge": "^4.2.2",
