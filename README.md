@@ -1,3 +1,6 @@
+> **:truck: moved to https://github.com/NordicSemiconductor/asset-tracker-cloud-app-js**  
+> :information_source: [more info](https://github.com/bifravst/bifravst/issues/56)
+
 # Cat Tracker Web Application
 
 [![GitHub Actions](https://github.com/bifravst/app/workflows/Test%20and%20Release/badge.svg)](https://github.com/bifravst/app/actions)
